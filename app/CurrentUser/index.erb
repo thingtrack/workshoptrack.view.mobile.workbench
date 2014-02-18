@@ -1,0 +1,129 @@
+<div data-role="page" id="user-config-page">
+
+  <script type="text/javascript">
+    $('[data-role=page]').on('pageshow', function (event) {
+        
+      $('#organization_list').bind( "change", function(event, ui) {
+        $.get('/app/CurrentUser/getLocations', { organization_selected: $(this).val()});
+      });
+      
+      $('#location_list').bind( "change", function(event, ui) {
+        $.get('/app/CurrentUser/getAreas', { location_selected: $(this).val()});
+      });
+   });
+   
+   function fillLocations(locations) {
+     
+     var parsed = jQuery.parseJSON(locations);
+     
+     var location_list = $('#location_list');
+     location_list.empty();
+     
+     $.each(parsed, function(i, location) {
+       var newOption = $("<option></option>").val(location.id).text(location.name);
+       newOption.appendTo(location_list);
+     });
+     
+     location_list.children('option:first').attr("selected", "selected");
+     location_list.selectmenu('refresh');
+     
+     $.get('/app/CurrentUser/getAreas', { location_selected: location_list.val()});
+   }
+   
+   function fillAreas(areas){
+     
+     var parsed = jQuery.parseJSON(areas);
+     
+     var area_list = $('#area_list');
+     area_list.empty();
+     
+     $.each(parsed, function(i, area) {
+       var newOption = $("<option></option>").val(area.id).text(area.name);
+       newOption.appendTo(area_list);
+     });
+     
+     area_list.children('option:first').attr("selected", "selected");
+     area_list.selectmenu('refresh');
+   }
+   
+  </script>
+    
+  <div data-role="panel" data-display="reveal" id="menu-panel" data-theme="a">
+        <div class="ui-panel-inner">  
+          <ul data-role="listview" data-theme="a">
+                <li><a href="Home"><span class="workshoptrack-icon-home"></span> Principal</a></li>
+                <li data-role="list-divider">Aplicaciones</li>
+                <li><a href="/app/Reception"><span class="workshoptrack-icon-box-add"></span> Recepciones</a></li>
+                <li><a href="/app/Expedition"><span class="workshoptrack-icon-box-remove"></span> Expediciones</a></li>
+                <li><a href="/app/Bin"><span class="workshoptrack-icon-target"></span> Ubicaci&oacute;n</a></li>
+                <li><a href="/app/Container"><span class="workshoptrack-icon-barcode"></span> Contenedor</a></li>
+                <li><a href="/app/Picking"><span class="workshoptrack-icon-cart"></span> Picking</a></li>
+                <li><a href="/app/Consolidation"><span class="workshoptrack-icon-contract"></span> Consolidaci&oacute;n</a></li>
+                <li><a href="/app/Printer"><span class="workshoptrack-icon-print"></span> Impresi&oacute;n</a></li>
+                <li><a href="/app/Equipment"><span class="workshoptrack-icon-wrench"></span> Equipamiento</a></li>
+                <li data-role="list-divider">Configuraci&oacute;n</li>
+                <li><a href="/app/CurrentUser"><span class="workshoptrack-icon-user"></span>  <%= CurrentUser.find(:first).username %></a></li>
+                <li data-role="list-divider">&nbsp;</li>
+                <li><a href="/app/Settings/logout"><span class="workshoptrack-icon-switch"></span> Cerrar sesi&oacute;n</a></li>
+           </ul>
+         </div>
+   </div>
+         
+   <div data-role="panel" data-position="right" data-display="reveal" id="users-panel" data-theme="a">
+        <div class="ui-panel-inner">
+           <ul data-role="listview" data-filter="true" data-filter-placeholder="Buscar usuario" data-filter-theme="a" data-theme="a">
+            <li>Carlos Angel Salinas</li>  
+            <li>Miguel Angel Salinas</li>
+            <li>Manrique Canteli</li>
+           </ul>
+        </div>
+   </div>
+  
+  <div data-role="header" data-position="inline">
+    <a href="#menu-panel"><span class="workshoptrack-icon-menu"></span> Menu</a>
+    <h1>Cambiar &aacute;rea</h1>
+    <a href="#users-panel"><span class="workshoptrack-icon-users"></span> Usuarios</a>    
+  </div>
+
+  <div data-role="content">
+      <form method="POST" action="<%= url_for :action => :apply %>">
+        <input type="hidden" name="id" value="<%= @current_user.object %>"/>
+
+        <ul data-role="listview" data-inset="true">
+          <li data-role="fieldcontain">
+            <label for="current_user[active_organization]" class="fieldLabel">Organizaci&oacute;n</label>
+            <select name="current_user[active_organization]" id="organization_list">
+              <% @organizations.each do |organization|%>
+                   <option value="<%= organization.id%>" <%= "selected"  if organization.id == @current_user.active_organization%> >
+                     <%=organization.name %>
+                   </option>
+              <%end%>
+            </select>
+          </li>
+          <li data-role="fieldcontain">
+            <label for="current_user[active_location]" class="fieldLabel">Localizaci&oacute;n</label>
+            <select name="current_user[active_location]" id="location_list">
+              <% @locations.each do |location|%>
+                   <option value="<%= location.id%>" <%= "selected"  if location.id == @current_user.active_location%> >
+                     <%=location.name %>
+                   </option>
+              <%end%>
+            </select>
+          </li>
+          <li data-role="fieldcontain">
+            <label for="current_user[active_area]" class="fieldLabel">&Aacute;rea</label>
+            <select name="current_user[active_area]" id="area_list">
+              <% @areas.each do |area|%>
+                   <option value="<%= area.id%>" <%= "selected"  if area.id == @current_user.active_area%> >
+                     <%=area.name %>
+                   </option>
+              <%end%>
+            </select>
+          </li>
+        </ul>
+        <input type="submit" value="Aplicar" data-theme="b" />
+      </form>  
+  </div>
+</div>
+
+                      

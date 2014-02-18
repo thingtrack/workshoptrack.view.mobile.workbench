@@ -1,0 +1,28 @@
+sdkversion: "4.0.0"
+name: "workshoptrack.view.mobile.workbench"
+version: 1.0
+vendor: "rhomobile"
+build: "debug"
+bbver: "6.0"
+applog: "rholog.txt"
+iphone:
+  configuration: "Release"
+  sdk: "iphonesimulator6.0"
+  provisionprofile: 
+  codesignidentity: 
+  entitlements: 
+  BundleIdentifier: "com.rhomobile.workshoptrack.view.mobile.workbench"
+  BundleURLScheme: "workshoptrack.view.mobile.workbench"
+wp:
+  productid: "f4255e10-d1f1-0130-f3dd-00264a157cd2"
+symbian:
+  uid: "0xed1c7e3f"
+android:
+  version: "2.3.3"
+extensions:
+  - rhoconnect-client
+  - coreapi	
+  - json
+  - another-extension  
+app_type: "rhoelements"
+capabilities: 

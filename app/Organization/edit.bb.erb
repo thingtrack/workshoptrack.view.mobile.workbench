@@ -1,0 +1,29 @@
+<div data-role="page">
+
+  <div data-role="header" data-position="inline">
+    <%= link_to "Back", :action => :show, :id => @organization.object %>
+    <h1>Edit <%= @organization.name%></h1>
+    <%= link_to "Delete", :action => :delete, :id => @organization.object %>
+  </div>
+
+  <div data-role="content">
+    <form method="POST" action="<%= url_for :action => :update %>">
+      <input type="hidden" name="id" value="<%= @organization.object %>"/>
+      <table>
+          
+          <tr>
+              <td class="itemLabel">Name: </td>
+              <td class="itemValue"><input type="text" name="organization[name]" value="<%= @organization.name %>"/></td>
+          </tr>
+          
+          <tr>
+              <td class="itemLabel">User: </td>
+              <td class="itemValue"><input type="text" name="organization[user_id]" value="<%= @organization.user_id %>"/></td>
+          </tr>
+          
+      </table>
+      <input type="submit" value="Update"/>
+    </form>
+  </div>
+
+</div>

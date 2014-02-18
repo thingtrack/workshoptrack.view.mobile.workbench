@@ -1,0 +1,256 @@
+<div data-role="page" id="new-stock-page">
+  <script type="text/javascript">
+      $('[data-role=page]').on('pageshow', function (event) {
+          
+          /* Remove the logistic props header if there is no inputs */
+          if($("[data-role=listview]").children("[data-role=list-divider]").length > 2 && $("[data-role=list-divider]").last().prevUntil("[data-role=list-divider]").length == 0 )
+              $("[data-role=list-divider]").last().prev().remove();
+          
+          /* Hide the search product input when the product is previous selected */
+          if($("[type=hidden]:first").val())
+              $("#scan-product-package").hide();
+        
+           $("#search-product").bind( "change", function(event, ui) {
+              $.get('/app/Stock/search', {label: $(this).val()});
+            });
+      });
+    
+    function result(product_package){
+      
+      var parsed_product_package = jQuery.parseJSON(product_package);
+      
+      //Remove input values
+            clear_form();
+            
+      // Remove previous prop inputs
+      if($("#form-input-list").find("[data-role=list-divider]").length > 2){
+        $("[data-role=list-divider]").last().prevUntil("[data-role=list-divider]").remove();
+        $("[data-role=list-divider]").last().prev().remove();
+      }
+      
+      if($.trim($('#search-product').val()).length == 0){
+          return;
+      }
+      
+      if($.trim($('#search-product').val()).length > 0 && parsed_product_package.object == undefined){
+          $('#warning-no-product').popup('open');
+          return;
+      } 
+      
+      /* Update product data */
+      $("[type=hidden]:first").val(parsed_product_package.product_id);
+      $("[type=hidden]:last").val(parsed_product_package.id);
+      $('#product-code').html(parsed_product_package.product_code);
+      $('#product-name').html(parsed_product_package.product_name);
+      
+      // Remove previous prop inputs
+      if($("[data-role=listview]").children("[data-role=list-divider]").length > 2 ){
+        $("[data-role=list-divider]").last().prevUntil("[data-role=list-divider]").remove();
+        $("[data-role=list-divider]").last().prev().remove();
+      }
+      
+      var logis_props = [];
+        
+      if(parsed_product_package.product_has_lote == 'true'){
+        var item = $('<li>')
+        .attr("data-role", "fieldcontain")
+        .append($('<label>', {
+            for: "product[lote]",
+            html: "Lote"
+          }))
+        .append($('<input>',{
+            type: "text",
+            id: "product[lote]",
+            name: "product[lote]"
+          }).attr("data-clear-btn", "true")
+          );
+          
+          logis_props.push(item); 
+      }
+      if(parsed_product_package.product_has_expedition_date == 'true'){
+        var item = $('<li>')
+        .attr("data-role", "fieldcontain")
+        .append($('<label>', {
+            for: "product[expedition-date]",
+            html: "Caducidad"
+          }))
+        .append($('<input>',{
+            type: "date",
+            id: "product[expedition-date]",
+            name: "product[expedition-date]"
+          }).attr("data-clear-btn", "true")
+          );
+          
+          logis_props.push(item);
+      }
+      if(parsed_product_package.product_has_weight == 'true'){
+        var item = $('<li>')
+        .attr("data-role", "fieldcontain")
+        .append($('<label>', {
+            for: "product[weight]",
+            html: "Peso"
+          }))
+        .append($('<input>',{
+            type: "date",
+            id: "product[weight]",
+            name: "product[weight]"
+          }).attr("data-clear-btn", "true")
+          );
+          
+          logis_props.push(item);         
+      }
+      if(parsed_product_package.product_has_serial_number == 'true'){
+        var item = $('<li>')
+        .attr("data-role", "fieldcontain")
+        .append($('<label>', {
+            for: "product[serial_number]",
+            html: "N&uacute;mero de serie"
+          }))
+        .append($('<input>',{
+            type: "text",
+            id: "product[serial_number]",
+            name: "product[serial_number]"
+          }).attr("data-clear-btn", "true")
+          );
+          
+          logis_props.push(item);
+      }
+      
+      /* If there is any logistic prop to introduce the array might not be empty */
+      if(logis_props.length > 0){
+        
+        var header_item = $('<li>', {
+          html: "Variables log&iacute;sticas" 
+        }).attr("data-role", "list-divider");
+        
+        $("[data-role=list-divider]").last().before(header_item);
+          
+        for ( var i in logis_props ) {
+          header_item.after( logis_props[ i ] );
+        }
+        
+        // Refresh
+        $('ul').listview('refresh');
+        $("ul").trigger('create')
+      }
+      
+        $.get("/app/Stock/product_unit/" + parsed_product_package.product_unit_id, {});
+      
+    }
+    
+    function clear_form(){
+      $(':input','form')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
+        
+       $('.itemValue').html('');
+          
+    }
+    
+    function fill_product_unit(product_unit){
+       
+       var parsed_product_unit = jQuery.parseJSON(product_unit);
+       $('#product-unit').html(parsed_product_unit.description);
+    }
+    
+    function show_stock_notfound(){
+      $('#warning-no-stock').popup('open');
+    }
+    
+    function show_stock_error(){
+      $('#warning-stock-quantity').popup('open');          
+    }
+   </script>
+  <div data-role="header">
+    <% if @bin %>
+      <a href="<%= url_for :controller => :Container, :action => :show, :query => { :number => @container['number'], :bin => @bin['id'] } %>" data-icon="arrow-l" data-direction="reverse">Cancelar</a>
+    <% else %>
+      <a href="<%= url_for :controller => :Container, :action => :show, :query => { :number => @container['number'] } %>" data-icon="arrow-l" data-direction="reverse">Cancelar</a>
+    <% end %> 
+    <h1>Baja stock</h1>
+  </div>
+  <div data-role="content">
+    <div id="scan-product-package">
+      <label for="search-product" class="ui-hidden-accessible">Escanear ubicaci&oacute;n:</label>
+      <input name="search-product" id="search-product" value="" type="search" placeholder="Escanear producto..."/>
+    </div>
+    <div id="warning-no-product" data-role="popup" data-overlay-theme="a" data-theme="e" class="ui-content">
+      <p>Ning&uacute;n product encontrado</p>
+    </div>
+    <% if @bin %>
+    <form id="new-container-form" method="POST" action="<%= url_for :action => :delete, :query => { :bin => @bin['id'], :container_number => @container['number'] }  %>">
+    <% else %>
+    <form id="new-container-form" method="POST" action="<%= url_for :action => :delete %>">
+    <% end %>
+      <input id="stock[product_id]" name="stock[product_id]" type="hidden" value="<%= @product['id'] if @product_flag %>" >
+      <input id="stock[container_id]" name="stock[container_id]" type="hidden" value="<%= @container['id'] %>" >
+      <ul id="form-input-list" data-role="listview" data-inset="true">
+        <li data-role="list-divider">Producto</li>
+        <li data-role="fieldcontain">
+            <div class="itemLabel">C&oacute;digo</div>
+            <div class="itemValue" id="product-code"><%=@product['code'] if @product_flag %></div>
+        </li>
+        <li data-role="fieldcontain">
+            <div class="itemLabel">Nombre</div>
+            <div class="itemValue" id="product-name"><%=@product['name'] if @product_flag %></div>
+        </li>
+        
+      <% if @product_flag && ( @product['has_lote'] || @product['has_serial_number'] || @product['has_expedition_date'] || @product['has_weight'] ) %>
+        <li data-role="list-divider">Variables log&iacute;ticas</li>
+        <% if @product['has_lote'] == true || @product['has_lote'] =~ (/(true|t|yes|y|1)$/i) %>
+        <li data-role="fieldcontain">
+            <label for="stock[lote]">Lote</label>
+            <input type="text" name="stock[lote]" id="stock[lote]" data-clear-btn="true">
+        </li>
+        <% end %>
+        <% if @product['has_serial_number'] == true || @product['has_serial_number'] =~ (/(true|t|yes|y|1)$/i) %>
+        <li data-role="fieldcontain">
+            <label for="stock[serial_number]">N&uacute;mero de serie</label>
+            <input type="text" name="stock[serial_number]" id="stock[serial_number]" data-clear-btn="true">
+        </li>
+        <% end %>
+        <% if @product['has_expedition_date'] == true || @product['has_expedition_date'] =~ (/(true|t|yes|y|1)$/i) %>
+        <li data-role="fieldcontain">
+            <label for="stock[expedition_date]">Caducidad</label>
+            <input type="date" name="stock[expedition_date]" id="stock[expedition_date]" data-clear-btn="true">
+        </li>
+        <% end %>
+        <% if @product['has_weigth'] == true || @product['has_weigth'] =~ (/(true|t|yes|y|1)$/i) %>
+        <li data-role="fieldcontain">
+            <label for="stock[weigth]">Peso</label>
+            <input type="number" name="stock[weigth]" id="stock[weigth]" data-clear-btn="true">
+        </li>
+        <% end %>
+        <% end %>
+        <li data-role="list-divider">Propiedades</li>
+        <li data-role="fieldcontain">
+            <label for="stock[quantity]">Cantidad</label>
+            <input type="number" name="stock[quantity]" id="stock[quantity]" pattern="[0-9]*"  value="">
+        </li>
+        <li data-role="fieldcontain">
+            <input id="stock[product_package_id]" name="stock[product_package_id]" type="hidden" value="<%= product_package(@product['id'], @product['product_package_id'])['id'] if @product_flag %>" >
+            <div class="itemLabel">Presentaci&oacute;n</div>
+            <div class="itemValue" id="product-unit"><%= retrieve_product_unit(@product['product_unit_id']).description if @product_flag %></div>
+        </li>
+        <li data-role="fieldcontain">
+           <label for="stock[status_id]">Estado</label>
+           <select name="stock[status_id]" id="stock[status_id]">
+             <% stock_statuses.each do |stock_status| %>
+               <option value="<%= stock_status.id %>"><%= stock_status.description %></option>                
+             <% end %>
+           </select>
+       </li>
+      </ul>
+      <input type="submit" value="Confirmar" data-theme="b"/>
+      </ul>
+    </form>
+    <div id="warning-no-stock" data-role="popup" data-overlay-theme="a" data-theme="e" class="ui-content">
+     <p>Ninguna l&iacute;nea de stock encontrada</p>
+    </div>    
+    <div id="warning-stock-quantity" data-role="popup" data-overlay-theme="a" data-theme="e" class="ui-content">
+     <p>La cantidad de stock a dar de baja excede la existente</p>
+    </div>    
+  </div>
+</div>

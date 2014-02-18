@@ -1,0 +1,44 @@
+<div data-role="page">
+
+  <div data-role="header" data-position="inline">
+    <%= link_to "Back", :action => :show, :id => @equipmenttype.object %>
+    <h1>Edit <%= @equipmenttype.id%></h1>
+    <%= link_to "Delete", :action => :delete, :id => @equipmenttype.object %>
+  </div>
+
+  <div data-role="content">
+    <form method="POST" action="<%= url_for :action => :update %>">
+      <input type="hidden" name="id" value="<%= @equipmenttype.object %>"/>
+      <table>
+          
+          <tr>
+              <td class="itemLabel">Id: </td>
+              <td class="itemValue"><input type="text" name="equipmenttype[id]" value="<%= @equipmenttype.id %>"/></td>
+          </tr>
+          
+          <tr>
+              <td class="itemLabel">Description: </td>
+              <td class="itemValue"><input type="text" name="equipmenttype[description]" value="<%= @equipmenttype.description %>"/></td>
+          </tr>
+          
+          <tr>
+              <td class="itemLabel">Code: </td>
+              <td class="itemValue"><input type="text" name="equipmenttype[code]" value="<%= @equipmenttype.code %>"/></td>
+          </tr>
+          
+          <tr>
+              <td class="itemLabel">Capacity: </td>
+              <td class="itemValue"><input type="text" name="equipmenttype[capacity]" value="<%= @equipmenttype.capacity %>"/></td>
+          </tr>
+          
+          <tr>
+              <td class="itemLabel">Speed: </td>
+              <td class="itemValue"><input type="text" name="equipmenttype[speed]" value="<%= @equipmenttype.speed %>"/></td>
+          </tr>
+          
+      </table>
+      <input type="submit" value="Update"/>
+    </form>
+  </div>
+
+</div>

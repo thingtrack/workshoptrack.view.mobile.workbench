@@ -1,0 +1,55 @@
+<div data-role="page" data-add-back-btn="true">
+
+  <div data-role="header" data-position="inline">
+    <%= link_to "Back", :action => :index %>
+    <h1><%= @equipment.id %></h1>
+    <%= link_to "Edit", :action => :edit, :id => @equipment.object %>
+  </div>
+
+  <div data-role="content">
+    <table>
+      
+      <tr>
+    	<td class="itemLabel">Id</td>
+        <td class="itemValue"><%= @equipment.id%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">Description</td>
+        <td class="itemValue"><%= @equipment.description%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">Model</td>
+        <td class="itemValue"><%= @equipment.model%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">Lock</td>
+        <td class="itemValue"><%= @equipment.lock%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">MacAddress</td>
+        <td class="itemValue"><%= @equipment.mac_address%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">TypeId</td>
+        <td class="itemValue"><%= @equipment.type_id%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">BinId</td>
+        <td class="itemValue"><%= @equipment.bin_id%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">AreaId</td>
+        <td class="itemValue"><%= @equipment.area_id%></td>
+      </tr>
+      
+    </table>
+  </div>
+
+</div>

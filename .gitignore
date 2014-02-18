@@ -1,0 +1,21 @@
+# OS files
+##############
+.DS_Store
+
+# Logs and symlinks
+##############
+rholog.txt
+rholog-*
+sim-*
+
+# Sim output
+##############
+rhosimulator/
+
+# Build output
+##############
+bin/
+
+# Eclipse files
+##############
+.project

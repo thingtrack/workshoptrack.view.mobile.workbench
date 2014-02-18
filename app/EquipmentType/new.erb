@@ -1,0 +1,45 @@
+<div data-role="page">
+
+  <div data-role="header" data-position="inline">
+    <h1>New <%= @equipmenttype.title %></h1>
+    <a href="<%= url_for :action => :index %>" class="ui-btn-left" data-icon="back" data-direction="reverse">
+      Cancel
+    </a>
+  </div>
+
+  <div data-role="content">
+    <form method="POST" action="<%= url_for :action => :create %>">
+      <input type="hidden" name="id" value="<%= @equipmenttype.object %>"/>
+
+      
+          <div data-role="fieldcontain">
+            <label for="equipmenttype[id]" class="fieldLabel">Id</label>
+            <input type="text" id="equipmenttype[id]" name="equipmenttype[id]" <%= placeholder("Id") %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipmenttype[description]" class="fieldLabel">Description</label>
+            <input type="text" id="equipmenttype[description]" name="equipmenttype[description]" <%= placeholder("Description") %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipmenttype[code]" class="fieldLabel">Code</label>
+            <input type="text" id="equipmenttype[code]" name="equipmenttype[code]" <%= placeholder("Code") %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipmenttype[capacity]" class="fieldLabel">Capacity</label>
+            <input type="text" id="equipmenttype[capacity]" name="equipmenttype[capacity]" <%= placeholder("Capacity") %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipmenttype[speed]" class="fieldLabel">Speed</label>
+            <input type="text" id="equipmenttype[speed]" name="equipmenttype[speed]" <%= placeholder("Speed") %> />
+          </div>
+      
+
+      <input type="submit" value="Create"/>
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,59 @@
+<div data-role="page" data-add-back-btn="false">
+
+  <div data-role="header" data-position="inline">
+    <h1><%= @equipment.id %></h1>
+    <a href="<%= url_for :action => :index %>" class="ui-btn-left" data-icon="arrow-l" data-direction="reverse">
+      Back
+    </a>
+    <a href="<%= url_for :action => :edit, :id => @equipment.object %>" class="ui-btn-right" data-icon="star">
+      Edit
+    </a>
+  </div>
+
+  <div data-role="content">
+    <ul data-role="listview">
+      
+          <li>
+            <div class="itemLabel">Id</div>
+            <div class="itemValue"><%= @equipment.id %></div>
+          </li>
+      
+          <li>
+            <div class="itemLabel">Description</div>
+            <div class="itemValue"><%= @equipment.description %></div>
+          </li>
+      
+          <li>
+            <div class="itemLabel">Model</div>
+            <div class="itemValue"><%= @equipment.model %></div>
+          </li>
+      
+          <li>
+            <div class="itemLabel">Lock</div>
+            <div class="itemValue"><%= @equipment.lock %></div>
+          </li>
+      
+          <li>
+            <div class="itemLabel">MacAddress</div>
+            <div class="itemValue"><%= @equipment.mac_address %></div>
+          </li>
+      
+          <li>
+            <div class="itemLabel">TypeId</div>
+            <div class="itemValue"><%= @equipment.type_id %></div>
+          </li>
+      
+          <li>
+            <div class="itemLabel">BinId</div>
+            <div class="itemValue"><%= @equipment.bin_id %></div>
+          </li>
+      
+          <li>
+            <div class="itemLabel">AreaId</div>
+            <div class="itemValue"><%= @equipment.area_id %></div>
+          </li>
+      
+    </ul>
+  </div>
+
+</div>

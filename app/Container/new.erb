@@ -1,0 +1,61 @@
+<div data-role="page">
+
+  <div data-role="header" data-position="inline">
+    <a href="<%= url_for :model => :Bin, :action => :show, :query => { :id => @bin } %>" data-icon="back" data-direction="reverse">Cancelar</a>
+    <h1>Nuevo contenedor</h1>    
+  </div>
+
+  <div data-role="content">
+    <form id="new-container-form" method="POST" action="<%= url_for :action => :create %>">
+      <input type="hidden" id="container[bin_id]" name="container[bin_id]" value="<%= @bin %>"/>
+      <ul data-role="listview" data-inset="true">
+        <li data-role="fieldcontain">
+          <label for="container[number]">N&uacute;mero:</label>
+          <input name="container[number]" id="container[number]" value="" data-clear-btn="true" type="text">
+        </li>
+        <li data-role="fieldcontain">
+          <label for="container[type_id]" class="select">Tipo:</label>
+          <select name="container[type_id]" id="container[type_id]">
+              <% @container_types.each do |type| %>
+                <option value="<%= type.id %>">
+                  <%= type.description %>
+                </option>
+              <% end %>              
+          </select>
+         </li>
+         <li data-role="fieldcontain">
+          <label for="container[status]" class="select">Estado:</label>
+          <select name="container[status_id]" id="container[status_id]">
+              <% @container_statuses.each do |status| %>
+                <option value="<%= status.id %>">
+                  <%= status.description %>
+                </option>
+              <% end %>  
+          </select>
+         </li>
+         <li data-role="fieldcontain">
+          <label for="container[comment]">Comentario:</label>
+          <textarea cols="40" rows="8" name="container[comment]" id="container[comment]"></textarea>
+         </li>
+      </ul>
+      <input type="submit" value="Crear" data-theme="b"/>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+    $("#new-container-form" ).validate({
+      rules: {
+        "container[number]": {
+          required: true,
+          maxlength: 255
+        }
+      },
+      messages: {
+          "container[number]": "N&uacute;mero de contenedor no v&aacute;lido"
+      },
+      errorPlacement: function(error, element) {
+          error.insertAfter($(element).parent());
+      }
+    });
+  </script>
+</div>

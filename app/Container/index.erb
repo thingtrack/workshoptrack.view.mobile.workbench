@@ -1,0 +1,87 @@
+<div data-role="page" id="container-scan-page">
+
+  <script type="text/javascript">  
+    $('[data-role=page]').on('pageshow', function (event) {
+          
+            $("#search-container").bind( "change", function(event, ui) {
+                $.getJSON('/app/Container/search', 
+                          {number: $(this).val()}).
+                                done(function(container){
+              
+                                  var result_list = $('#result-list');
+                                  result_list.empty();
+                                    
+                                  if($.trim($('#search-container').val()).length > 0 && Object.keys(container).length == 0){
+                                    $('#warning-no-container').popup('open');
+                                    return;
+                                  }
+                                  
+                                    var container_item = $('<li>').append(
+                                    $('<a>',{
+                                      href: '/app/Container/show?number='+container.number
+                                      }).append(
+                                        $('<h2>', {
+                                          html: 'Contenedor ' + container.number
+                                        })).append(
+                                        $('<p>', {
+                                          html: 'Pasillo: ' + '<strong>'+ container.aisle + '</strong> Ubicaci&oacute;n: <strong>' + container.bin + '</strong>'
+                                        }))
+                                    );
+                                      
+                                    result_list.append(container_item);
+                                    result_list.listview('refresh');
+                                  
+                                });
+      });
+      
+      });
+      
+  </script>
+    
+  <div data-role="panel" data-display="reveal" id="menu-panel" data-theme="a">
+        <div class="ui-panel-inner">  
+          <ul data-role="listview" data-theme="a">
+                <li><a href="Home"><span class="workshoptrack-icon-home"></span> Principal</a></li>
+                <li data-role="list-divider">Aplicaciones</li>
+                <li><a href="/app/Reception"><span class="workshoptrack-icon-box-add"></span> Recepciones</a></li>
+                <li><a href="/app/Expedition"><span class="workshoptrack-icon-box-remove"></span> Expediciones</a></li>
+                <li><a href="/app/Bin"><span class="workshoptrack-icon-target"></span> Ubicaci&oacute;n</a></li>
+                <li><a href="/app/Container"><span class="workshoptrack-icon-barcode"></span> Contenedor</a></li>
+                <li><a href="/app/Picking"><span class="workshoptrack-icon-cart"></span> Picking</a></li>
+                <li><a href="/app/Consolidation"><span class="workshoptrack-icon-contract"></span> Consolidaci&oacute;n</a></li>
+                <li><a href="/app/Printer"><span class="workshoptrack-icon-print"></span> Impresi&oacute;n</a></li>
+                <li><a href="/app/Equipment"><span class="workshoptrack-icon-wrench"></span> Equipamiento</a></li>
+                <li data-role="list-divider">Configuraci&oacute;n</li>
+                <li><a href="/app/CurrentUser"><span class="workshoptrack-icon-user"></span> Carlos Salinas</a></li>
+                <li data-role="list-divider">&nbsp;</li>
+                <li><a href="/app/Settings/logout"><span class="workshoptrack-icon-switch"></span> Cerrar sesi&oacute;n</a></li>
+           </ul>
+         </div>
+   </div>
+         
+   <div data-role="panel" data-position="right" data-display="reveal" id="users-panel" data-theme="a">
+        <div class="ui-panel-inner">
+           <ul data-role="listview" data-filter="true" data-filter-placeholder="Buscar usuario" data-filter-theme="a" data-theme="a">
+            <li>Carlos Angel Salinas</li>  
+            <li>Miguel Angel Salinas</li>
+            <li>Manrique Canteli</li>
+           </ul>
+        </div>
+   </div>
+   
+   <div data-role="header" data-position="inline">
+    <a href="#menu-panel"><span class="workshoptrack-icon-menu"></span> Menu</a>
+    <h1>Escanear contenedor</h1>
+    <a href="#users-panel"><span class="workshoptrack-icon-users"></span> Usuarios</a>    
+  </div>
+
+  <div data-role="content">
+       <label for="search-container" class="ui-hidden-accessible">Escanear contenedor:</label>
+       <input name="search-container" id="search-container" value="" type="search" placeholder="Escanear contenedor..."/>
+       <ul id="result-list" data-role="listview" data-inset="true" data-count-theme="b"></ul>
+       <div id="warning-no-container" data-role="popup" data-overlay-theme="a" data-theme="e" class="ui-content">
+         <p>Ning&uacute;n contenedor encontrado</p>
+       </div>
+  </div>
+
+</div>

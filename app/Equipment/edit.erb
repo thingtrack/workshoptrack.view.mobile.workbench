@@ -1,0 +1,61 @@
+<div data-role="page">
+
+  <div data-role="header" data-position="inline">
+    <h1>Edit <%= @equipment.id %></h1>
+    <a href="<%= url_for :action => :show, :id => @equipment.object %>" class="ui-btn-left" data-icon="back" data-direction="reverse">
+      Cancel
+    </a>
+    <a href="<%= url_for :action => :delete, :id => @equipment.object %>" class="ui-btn-right" data-icon="delete" data-direction="reverse">
+      Delete
+    </a>
+  </div>
+
+  <div data-role="content">
+    <form method="POST" action="<%= url_for :action => :update %>">
+      <input type="hidden" name="id" value="<%= @equipment.object %>"/>
+      
+          <div data-role="fieldcontain">
+            <label for="equipment[id]" class="fieldLabel">Id</label>
+            <input type="text" id="equipment[id]" name="equipment[id]" value="<%= @equipment.id %>" <%= placeholder( "Id" ) %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipment[description]" class="fieldLabel">Description</label>
+            <input type="text" id="equipment[description]" name="equipment[description]" value="<%= @equipment.description %>" <%= placeholder( "Description" ) %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipment[model]" class="fieldLabel">Model</label>
+            <input type="text" id="equipment[model]" name="equipment[model]" value="<%= @equipment.model %>" <%= placeholder( "Model" ) %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipment[lock]" class="fieldLabel">Lock</label>
+            <input type="text" id="equipment[lock]" name="equipment[lock]" value="<%= @equipment.lock %>" <%= placeholder( "Lock" ) %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipment[mac_address]" class="fieldLabel">Mac address</label>
+            <input type="text" id="equipment[mac_address]" name="equipment[mac_address]" value="<%= @equipment.mac_address %>" <%= placeholder( "Mac address" ) %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipment[type_id]" class="fieldLabel">Type</label>
+            <input type="text" id="equipment[type_id]" name="equipment[type_id]" value="<%= @equipment.type_id %>" <%= placeholder( "Type" ) %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipment[bin_id]" class="fieldLabel">Bin</label>
+            <input type="text" id="equipment[bin_id]" name="equipment[bin_id]" value="<%= @equipment.bin_id %>" <%= placeholder( "Bin" ) %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="equipment[area_id]" class="fieldLabel">Area</label>
+            <input type="text" id="equipment[area_id]" name="equipment[area_id]" value="<%= @equipment.area_id %>" <%= placeholder( "Area" ) %> />
+          </div>
+      
+      <input type="submit" value="Update"/>
+    </form>
+  </div>
+
+</div>

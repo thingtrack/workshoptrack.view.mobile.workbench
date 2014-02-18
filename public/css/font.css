@@ -1,0 +1,72 @@
+@font-face {
+	font-family: 'workshoptrack';
+	src:url('../fonts/workshoptrack.eot');
+	src:url('../fonts/workshoptrack.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/workshoptrack.woff') format('woff'),
+		url('../fonts/workshoptrack.ttf') format('truetype'),
+		url('../fonts/workshoptrack.svg#workshoptrack') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="workshoptrack-icon-"] {
+*/
+.workshoptrack-icon-home, .workshoptrack-icon-barcode, .workshoptrack-icon-box-add, .workshoptrack-icon-box-remove, .workshoptrack-icon-target, .workshoptrack-icon-switch, .workshoptrack-icon-wrench, .workshoptrack-icon-cart, .workshoptrack-icon-print, .workshoptrack-icon-users, .workshoptrack-icon-user, .workshoptrack-icon-menu, .workshoptrack-icon-info, .workshoptrack-icon-cog, .workshoptrack-icon-contract {
+	font-family: 'workshoptrack';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.workshoptrack-icon-home:before {
+	content: "\e00c";
+}
+.workshoptrack-icon-barcode:before {
+	content: "\e000";
+}
+.workshoptrack-icon-box-add:before {
+	content: "\e001";
+}
+.workshoptrack-icon-box-remove:before {
+	content: "\e003";
+}
+.workshoptrack-icon-target:before {
+	content: "\e002";
+}
+.workshoptrack-icon-switch:before {
+	content: "\e006";
+}
+.workshoptrack-icon-wrench:before {
+	content: "\e009";
+}
+.workshoptrack-icon-cart:before {
+	content: "\e00b";
+}
+.workshoptrack-icon-print:before {
+	content: "\e008";
+}
+.workshoptrack-icon-users:before {
+	content: "\e005";
+}
+.workshoptrack-icon-user:before {
+	content: "\e007";
+}
+.workshoptrack-icon-menu:before {
+	content: "\e004";
+}
+.workshoptrack-icon-info:before {
+	content: "\e00d";
+}
+.workshoptrack-icon-cog:before {
+	content: "\e00e";
+}
+.workshoptrack-icon-contract:before {
+	content: "\e00a";
+}

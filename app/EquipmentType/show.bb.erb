@@ -1,0 +1,40 @@
+<div data-role="page" data-add-back-btn="true">
+
+  <div data-role="header" data-position="inline">
+    <%= link_to "Back", :action => :index %>
+    <h1><%= @equipmenttype.id %></h1>
+    <%= link_to "Edit", :action => :edit, :id => @equipmenttype.object %>
+  </div>
+
+  <div data-role="content">
+    <table>
+      
+      <tr>
+    	<td class="itemLabel">Id</td>
+        <td class="itemValue"><%= @equipmenttype.id%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">Description</td>
+        <td class="itemValue"><%= @equipmenttype.description%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">Code</td>
+        <td class="itemValue"><%= @equipmenttype.code%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">Capacity</td>
+        <td class="itemValue"><%= @equipmenttype.capacity%></td>
+      </tr>
+      
+      <tr>
+    	<td class="itemLabel">Speed</td>
+        <td class="itemValue"><%= @equipmenttype.speed%></td>
+      </tr>
+      
+    </table>
+  </div>
+
+</div>

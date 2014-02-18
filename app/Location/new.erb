@@ -1,0 +1,30 @@
+<div data-role="page">
+
+  <div data-role="header" data-position="inline">
+    <h1>New <%= @location.title %></h1>
+    <a href="<%= url_for :action => :index %>" class="ui-btn-left" data-icon="back" data-direction="reverse">
+      Cancel
+    </a>
+  </div>
+
+  <div data-role="content">
+    <form method="POST" action="<%= url_for :action => :create %>">
+      <input type="hidden" name="id" value="<%= @location.object %>"/>
+
+      
+          <div data-role="fieldcontain">
+            <label for="location[name]" class="fieldLabel">Name</label>
+            <input type="text" id="location[name]" name="location[name]" <%= placeholder("Name") %> />
+          </div>
+      
+          <div data-role="fieldcontain">
+            <label for="location[organization_id]" class="fieldLabel">Organization</label>
+            <input type="text" id="location[organization_id]" name="location[organization_id]" <%= placeholder("Organization") %> />
+          </div>
+      
+
+      <input type="submit" value="Create"/>
+    </form>
+  </div>
+
+</div>
